@@ -1,12 +1,39 @@
-# React + Vite
+# 🌐 LangSwap - Python 🔁 C++ Code Translator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![LangSwap Banner](https://img.shields.io/badge/Built%20with-React%20%26%20Flask-blue?style=flat&logo=react)  
+LangSwap is a powerful web-based tool that converts **Python code to clean, readable C++** using real-time AST parsing — perfect for developers, students, and curious learners.
 
-Currently, two official plugins are available:
+> ✨ Type your Python code ➜ Click **Translate** ➜ Get the C++ equivalent instantly.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🎯 Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 🧠 **Python → C++ Translation** via AST
+- 📥 Handles `input()`, `print()`, arithmetic, conditions, loops, and more
+- 📦 Converts lists to `vector`, strings to `std::string`
+- 🔣 Built-in support for:
+  - `append()`, `len()`
+  - `if/else`, `while`, `for` loops
+  - `upper()`, `lower()`, function calls
+- 🧪 Interactive Monaco code editor
+- 🌐 Fast React + Flask-based interface
+
+---
+
+## 💻 Live Demo
+
+> Coming soon...
+
+Or run it locally 👇
+
+---
+
+## ⚙️ Installation
+
+### 🔹 Backend (Python + Flask)
+
+```bash
+cd backend
+pip install flask
+python main.py
