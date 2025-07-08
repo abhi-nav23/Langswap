@@ -61,48 +61,37 @@ class SimplePythonParser(ast.NodeVisitor):
 
 
     def visit_Expr(self, node):
-        if isinstance(node.value, ast.Call):
-            func = node.value.func
+        value = node.value
 
-            # Handle append ➝ push_back
-            if isinstance(func, ast.Attribute) and func.attr == "append":
-                list_name = self._get_expr(func.value)
-                arg = self._get_expr(node.value.args[0])
-                self.main_body.append(f"{list_name}.push_back({arg});")
-                return
-        if isinstance(node.value, ast.Call) and getattr(node.value.func, 'id', '') == 'print':
-            args = node.value.args
+        # Case: print(...)
+        if isinstance(value, ast.Call) and getattr(value.func, 'id', '') == 'print':
+            args = value.args
             cpp_print = ' << '.join([self._get_expr(arg) for arg in args])
             self.main_body.append(f'cout << {cpp_print} << endl;')
-        elif isinstance(node.value, ast.Call):
-            call = node.value
-            if isinstance(call.func, ast.Attribute):
-                obj = self._get_expr(call.func.value)
-                method = call.func.attr
+            return
 
-                # Handle append()
-                if method == "append":
-                    arg = self._get_expr(call.args[0])
-                    self.main_body.append(f"{obj}.push_back({arg});")
-                    return
+        # Case: append() ➝ push_back()
+        if isinstance(value, ast.Call) and isinstance(value.func, ast.Attribute):
+            obj = self._get_expr(value.func.value)
+            method = value.func.attr
 
-            elif getattr(call.func, 'id', '') == "len":
-                arg = self._get_expr(call.args[0])
-                self.main_body.append(f"cout << {arg}.size() << endl;")
+            if method == "append":
+                arg = self._get_expr(value.args[0])
+                self.main_body.append(f"{obj}.push_back({arg});")
                 return
-        elif isinstance(node.value, ast.Call):
-            call = node.value
-            if isinstance(call.func, ast.Attribute):
-                obj = self._get_expr(call.func.value)
-                method = call.func.attr
-                if method == "append":
-                    arg = self._get_expr(call.args[0])
-                    self.main_body.append(f"{obj}.push_back({arg});")
-                    return
 
-        else:
-            expr = self._get_expr(node.value)
-            self.main_body.append(f"{expr};")
+            # Add more method handlers if needed
+
+        # Case: len() ➝ x.size()
+        if isinstance(value, ast.Call) and getattr(value.func, 'id', '') == 'len':
+            arg = self._get_expr(value.args[0])
+            self.main_body.append(f"cout << {arg}.size() << endl;")
+            return
+
+        # Default: treat as expression
+        expr = self._get_expr(value)
+        self.main_body.append(f"{expr};")
+
     def visit_If(self, node):
         test = self._get_condition(node.test)
         self.main_body.append(f"if ({test}) {{")
@@ -149,6 +138,15 @@ class SimplePythonParser(ast.NodeVisitor):
                 self.visit(stmt)
 
             self.main_body.append("}")
+        elif isinstance(node.iter, ast.Name):  # e.g., for num in numbers:
+            iterable = self._get_expr(node.iter)
+            var = node.target.id
+            self.main_body.append(f"for (auto {var} : {iterable}) {{")
+            for stmt in node.body:
+                self.visit(stmt)
+            self.main_body.append("}")
+            return
+
         else:
             self.main_body.append("/* unsupported for-loop */")
 
