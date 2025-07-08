@@ -1,2 +1,3 @@
-name = input("Enter your name: ")
-print(name.upper())
+a = int(input("Enter a number: "))
+b = 5
+print("Sum is", a + b)

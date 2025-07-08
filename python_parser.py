@@ -44,12 +44,10 @@ class SimplePythonParser(ast.NodeVisitor):
                         if inner_call.args and isinstance(inner_call.args[0], ast.Constant):
                             prompt = inner_call.args[0].value
                             self.main_body.append(f'cout << "{prompt}";')
-                        self.main_body.append("string __temp_input;")
-                        self.main_body.append("cin >> __temp_input;")
-                        self.uses_string = True
-                        cast_func = "stoi" if func_id == "int" else "stof"
-                        self.main_body.append(f"{value_type} {var_name} = {cast_func}(__temp_input);")
+                        self.main_body.append(f"{value_type} {var_name};")
+                        self.main_body.append(f"cin >> {var_name};")  # ✅ FIX: direct input as int
                         return
+
 
             # ✅ Default assignment
             expr = self._get_expr(value_node)
