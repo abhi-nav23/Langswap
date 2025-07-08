@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from langswap_engine.python_parser import parse_python_code_from_string
+from python_parser import parse_python_code_from_string
+
 import os
 
 app = Flask(__name__)
