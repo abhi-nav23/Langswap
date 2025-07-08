@@ -63,9 +63,21 @@ class SimplePythonParser(ast.NodeVisitor):
     def visit_Expr(self, node):
         value = node.value
 
-        # Case: print(...)
+        # Case: print(...), special handling for list-like
         if isinstance(value, ast.Call) and getattr(value.func, 'id', '') == 'print':
             args = value.args
+
+            # ✅ Special Case: print("Label", list_variable)
+            if len(args) == 2 and isinstance(args[0], ast.Constant) and isinstance(args[1], ast.Name):
+                var_name = args[1].id
+                label = args[0].value
+
+                self.main_body.append(f'cout << "{label} ";')
+                self.main_body.append(f'for (auto x : {var_name}) cout << x << " ";')
+                self.main_body.append("cout << endl;")
+                return
+
+            # ✅ General Case: print("Hello", name, 5 + 2)
             cpp_print = ' << '.join([self._get_expr(arg) for arg in args])
             self.main_body.append(f'cout << {cpp_print} << endl;')
             return
@@ -80,8 +92,6 @@ class SimplePythonParser(ast.NodeVisitor):
                 self.main_body.append(f"{obj}.push_back({arg});")
                 return
 
-            # Add more method handlers if needed
-
         # Case: len() ➝ x.size()
         if isinstance(value, ast.Call) and getattr(value.func, 'id', '') == 'len':
             arg = self._get_expr(value.args[0])
@@ -91,6 +101,7 @@ class SimplePythonParser(ast.NodeVisitor):
         # Default: treat as expression
         expr = self._get_expr(value)
         self.main_body.append(f"{expr};")
+
 
     def visit_If(self, node):
         test = self._get_condition(node.test)
