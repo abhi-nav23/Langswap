@@ -11,9 +11,10 @@ function App() {
   const handleTranslate = async () => {
     try {
       setLoading(true); // ✅ Show loading
-      const response = await axios.post("http://localhost:8000/translate", {
-        code: inputCode,
-      });
+  const response = await axios.post("https://langswap.onrender.com/translate", {
+    code: inputCode,
+  });
+
       setOutputCode(response.data.cpp || "// Translation failed.");
     } catch (err) {
       setOutputCode("// ❌ Error connecting to backend.");
