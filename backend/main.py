@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from langswap_engine.python_parser import parse_python_code_from_string
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -17,4 +18,5 @@ def translate_code():
     return jsonify({"cpp": cpp_code})
 
 if __name__ == '__main__':
-    app.run(port=8000, debug=True)
+    port = int(os.environ.get("PORT", 8000))
+    app.run(host='0.0.0.0', port=port)
