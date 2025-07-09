@@ -2,7 +2,6 @@
 
 LangSwap is a web-based tool that **translates Python code into equivalent C++ code** using Python's `ast` module for parsing and conversion. It features a live code editor and instant translation powered by a Flask backend.
 
-![LangSwap UI](https://your-screenshot-link-if-any)
 
 ---
 
@@ -30,5 +29,4 @@ LangSwap is a web-based tool that **translates Python code into equivalent C++ c
 
 ---
 
-## 📁 Project Structure
 
