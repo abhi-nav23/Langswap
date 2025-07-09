@@ -1,39 +1,34 @@
-# 🌐 LangSwap - Python 🔁 C++ Code Translator
+# 🌐 LangSwap 🔁 — Python to C++ Translator
 
-![LangSwap Banner](https://img.shields.io/badge/Built%20with-React%20%26%20Flask-blue?style=flat&logo=react)  
-LangSwap is a powerful web-based tool that converts **Python code to clean, readable C++** using real-time AST parsing — perfect for developers, students, and curious learners.
+LangSwap is a web-based tool that **translates Python code into equivalent C++ code** using Python's `ast` module for parsing and conversion. It features a live code editor and instant translation powered by a Flask backend.
 
-> ✨ Type your Python code ➜ Click **Translate** ➜ Get the C++ equivalent instantly.
-
----
-
-## 🎯 Features
-
-- 🧠 **Python → C++ Translation** via AST
-- 📥 Handles `input()`, `print()`, arithmetic, conditions, loops, and more
-- 📦 Converts lists to `vector`, strings to `std::string`
-- 🔣 Built-in support for:
-  - `append()`, `len()`
-  - `if/else`, `while`, `for` loops
-  - `upper()`, `lower()`, function calls
-- 🧪 Interactive Monaco code editor
-- 🌐 Fast React + Flask-based interface
+![LangSwap UI](https://your-screenshot-link-if-any)
 
 ---
 
-## 💻 Live Demo
+## 🚀 Live Demo
 
-> Coming soon...
-
-Or run it locally 👇
+👉 [https://langswap-zrtc.vercel.app](https://langswap-zrtc.vercel.app)
 
 ---
 
-## ⚙️ Installation
+## 🔧 Features
 
-### 🔹 Backend (Python + Flask)
+- ✍️ Write Python code in an interactive Monaco editor
+- 🔁 Instantly convert it into C++ code
+- 📤 Backend powered by Flask and AST parsing
+- ⚡ Fast and simple UI with React + Vite
+- 🌐 Fully deployed on Vercel (Frontend) and Render (Backend)
 
-```bash
-cd backend
-pip install flask
-python main.py
+---
+
+## 🖼️ Tech Stack
+
+| Frontend  | Backend | Parser     | Deployment   |
+|-----------|---------|------------|--------------|
+| React + Vite | Flask (Python) | Python AST | Vercel + Render |
+
+---
+
+## 📁 Project Structure
+
